@@ -13,16 +13,21 @@ for i in range(7):
 calc_display = tk.Entry(root, width=30, bg="gray10",
                         fg="dodger blue", borderwidth=2)
 calc_display.grid(row=0, column=0, columnspan=4,
-                  ipady=4, ipadx=54, padx=2, pady=2)
+                  ipady=4, ipadx=54, padx=2, pady=2, sticky="ew")
 calc_display.bind("<Key>", lambda e: "break")
 
 
 def append_to_display(value):
+    if calc_display.get() == "Error":
+        calc_display.delete(0, tk.END)
     calc_display.insert(tk.END, value)
 
 
 def calculate_result():
-    result = eval(calc_display.get())
+    try:
+        result = eval(calc_display.get())
+    except Exception:
+        result = "Error"
     calc_display.delete(0, tk.END)
     calc_display.insert(0, result)
 
